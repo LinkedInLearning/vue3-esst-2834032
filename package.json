@@ -1,0 +1,24 @@
+{
+  "name": "vue3-esst",
+  "version": "1.0.0",
+  "description": "Repository for my LinkedIn course Vue.js Essential Training",
+  "devDependencies": {
+    "browser-sync": "^2.26.12",
+    "gulp": "^4.0.2"
+  },
+  "scripts": {
+    "start": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinkedInLearning/vue3-esst-2841311.git"
+  },
+  "keywords": [
+    "tutorial",
+    "vuejs",
+    "vue3",
+    "vuejs3"
+  ],
+  "author": "Ray Villalobos",
+  "license": "ISC"
+}
