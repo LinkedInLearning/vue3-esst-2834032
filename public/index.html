@@ -2,22 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Basic Vue Template</title>
+  <title>Vue 3: Essential Training</title>
   <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css'>
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'>
   <script src='https://unpkg.com/vue@next'></script><script  src="./script.js"></script>
 </head>
 <body class="container mt-5">
 <!-- App Template Code Here -->
-<div id="app">
- <h1>{{ name }}</h1>
-</div>
-
-<hr>
-
-<div id="anotherApp">
- <h1>{{ name }}</h1>
-</div>
+<section id="app">
+  <h2>{{ name }}</h2>
+  <p>{{description}}</p>
+  <div class="h3">${{price}}</div>
+</section>
 <!-- App Template Code Here -->
 
 <!-- App Script Code Here -->
@@ -25,20 +21,15 @@
 const App = {
   data() {
     return {
-      name: 'Bamboo Thermal Ski Coat'
+  "name": "Bamboo Thermal Ski Coat",
+  "description": "You'll be the most environmentally conscious skier on the slopes - and the most stylish - wearing our fitted bamboo thermal ski coat, made from organic bamboo with recycled plastic down filling.",
+  "imgSrc": "https://hplussport.com/wp-content/uploads/2016/12/ski-coat_LYNDA_29940.jpg",
+  "price": 99
     }
   }
 }
 
 Vue.createApp(App).mount('#app')
-
-Vue.createApp({
-  data() {
-    return {
-      name: 'Polo Shirt'
-    }
-  }
-}).mount('#anotherApp')
 </script>
 <!-- App Script Code Here -->
 </body>
