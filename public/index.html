@@ -5,12 +5,13 @@
   <title>Vue 3: Essential Training</title>
   <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css'>
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'>
-  <script src='https://unpkg.com/vue@next'></script><script  src="./script.js"></script>
+  <script src='https://unpkg.com/vue@next'></script>
 </head>
 <body class="container mt-5">
 <!-- App Template Code Here -->
 <section id="app">
   <h2>{{ name }}</h2>
+  <img class="img-fluid" :src="imgSrc" :alt="name">
   <p>{{description}}</p>
   <div class="h3">${{price}}</div>
 </section>
