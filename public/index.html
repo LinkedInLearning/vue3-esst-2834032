@@ -11,6 +11,7 @@
 <!-- App Template Code Here -->
 <section class="container" id="app">
   <div v-for="item in products" :key="item.id" id="item-list" class="row d-flex mb-3 align-items-center">
+    <template v-if="item.price<=Number(max)">
       <div class="col-sm-4">
         <img class="img-fluid d-block" :src="item.image" :alt="item.name">
       </div>
@@ -18,11 +19,12 @@
        <h3 class="text-primary">{{item.name }}</h3>
        <p class="mb-0">{{ item.description }}</p>
        <div class="h5 float-right">
-         <span class="badge bg-success">premier</span>
-         <span class="badge bg-primary">value</span>
-         <span class="badge bg-danger">sale</span>
+         <span class="badge bg-success" v-if="item.price>=90">premier</span>
+         <span class="badge bg-primary" v-else-if="item.price<90 && item.price>10">value</span>
+         <span class="badge bg-danger" v-else>sale</span>
          ${{item.price}}</div>
       </div>
+    </template>
   </div>
 </section>
 <!-- App Template Code Here -->
@@ -32,6 +34,7 @@
 const App = {
   data() {
     return {
+      max: 100,
       products : [
         {
           "id": "532",
