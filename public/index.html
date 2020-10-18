@@ -10,7 +10,19 @@
 <body class="container mt-5">
 <!-- App Template Code Here -->
 <section class="container" id="app">
-  <div v-for="item in products" :key="item.id" id="item-list" class="row d-flex mb-3 align-items-center">
+  
+  <label for="max-price" class="form-label h2">Max Price</label>
+  <input class="form-control" id="max-price" >
+  <input type="range" class="form-range" min="0" max="130" >
+
+ <div class="form-check">
+  <input v-model="displayLabels" class="form-check-input" type="checkbox" id="showLabels">
+  <label class="form-check-label" for="showLabels">
+      <span class="badge bg-dark" v-else>show labels</span>
+  </label>
+</div>
+
+  <div v-for="item in products" :key="item.id" id="item-list" class="row align-items-center">
     <template v-if="item.price<=Number(max)">
       <div class="col-sm-4">
         <img class="img-fluid d-block" :src="item.image" :alt="item.name">
@@ -27,6 +39,7 @@
     </template>
   </div>
 </section>
+
 <!-- App Template Code Here -->
 
 <!-- App Script Code Here -->
@@ -34,7 +47,7 @@
 const App = {
   data() {
     return {
-      max: 100,
+      max: 50,
       products : [
         {
           "id": "532",
