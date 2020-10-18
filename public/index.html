@@ -9,25 +9,54 @@
 </head>
 <body class="container mt-5">
 <!-- App Template Code Here -->
-<section class="container" id="app">
-  
+<div id="app">
+  <nav class="navbar navbar-light sticky-top mr-3">
+  <div  class=" w-100 navbar-text ml-auto d-flex justify-content-end position-relative">
+    <div class="mr-auto d-flex align-items-end flex-column bd-highlight mb-3 position-absolute" >
+      <div class="mb-2">
+        <span class="font-weight-bold bg-white">cartTotal</span>
+        <button
+          class="btn btn-success btn-sm ml-3"
+          id="cartDropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+        <i class="fas fa-shopping-cart mr-1"></i>
+          cartLength
+        </button>
+      </div>
+      <div class="list-group" aria-labelledby="cartDropdown">
+        <div v-for="(item, index) in cart" :key="index" class="list-group-item d-flex justify-content-between">
+            <div>{{item.name}}</div>
+            <div class="ml-3 font-weight-bold">{{currency(item.price)}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="container">  
   <label for="max-price" class="form-label h2">Max Price (${{max}})</label>
   <div class="badge bg-success ml-3">results: {{filteredProducts.length}}</div>
-  <input v-model.number="max" type="range" class="form-range" min="0" max="130" >
 
+  <input v-model.number="max" type="range" class="form-range" min="0" max="130" >
   
   <div v-for="(item, index) in filteredProducts" :key="item.id" id="item-list" class="row align-items-center">
-      <div class="col-sm-4">
-        <img class="img-fluid d-block" :src="item.image" :alt="item.name">
-      </div>
-      <div class="col">
-       <h3 class="text-primary">{{item.name }}</h3>
-       <p class="mb-0">{{ item.description }}</p>
-       <div class="h5 float-right">
-         {{ currency(item.price) }}</div>
-      </div>
+    <div class="col-1 m-auto">
+      <button class="btn btn-success">+</button>
+    </div>
+    <div class="col-sm-4">
+      <img class="img-fluid d-block" :src="item.image" :alt="item.name">
+    </div>
+    <div class="col">
+     <h3 class="text-primary">{{item.name }}</h3>
+     <p class="mb-0">{{ item.description }}</p>
+     <div class="h5 float-right">
+       {{ currency(item.price) }}</div>
+    </div>
   </div>
 </section>
+</div>
 <!-- App Template Code Here -->
 
 <!-- App Script Code Here -->
@@ -35,7 +64,6 @@
 const App = {
   data() {
     return {
-      displayLabels: true,
       max: 50,
       products : [
         {
@@ -288,8 +316,8 @@ const App = {
   },
   methods: {
     currency(value) {
-      return `$${Number.parseFloat(value).toFixed(2)}`;
-    }    
+      return '$' + Number.parseFloat(value).toFixed(2);
+    }
   }
 }
 
