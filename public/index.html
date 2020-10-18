@@ -10,7 +10,11 @@
 <body class="container mt-5">
 <!-- App Template Code Here -->
 <section class="container" id="app">
-  <div v-for="item in products" :key="item.id" id="item-list" class="row d-flex mb-3 align-items-center">
+  
+  <label for="max-price" class="form-label h2">Max Price (${{max}})</label>
+  <input v-model="max" type="range" class="form-range" min="0" max="130" >
+
+  <div v-for="(item, index) in products" :key="item.id" id="item-list" class="row align-items-center">
     <template v-if="item.price<=Number(max)">
       <div class="col-sm-4">
         <img class="img-fluid d-block" :src="item.image" :alt="item.name">
@@ -19,10 +23,7 @@
        <h3 class="text-primary">{{item.name }}</h3>
        <p class="mb-0">{{ item.description }}</p>
        <div class="h5 float-right">
-         <span class="badge bg-success" v-if="item.price>=90">premier</span>
-         <span class="badge bg-primary" v-else-if="item.price<90 && item.price>10">value</span>
-         <span class="badge bg-danger" v-else>sale</span>
-         ${{item.price}}</div>
+         ${{ item.price }}</div>
       </div>
     </template>
   </div>
@@ -34,7 +35,8 @@
 const App = {
   data() {
     return {
-      max: 100,
+      displayLabels: true,
+      max: 50,
       products : [
         {
           "id": "532",
