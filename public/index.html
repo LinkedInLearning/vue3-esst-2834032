@@ -12,8 +12,8 @@
 <section class="container" id="app">
   
   <label for="max-price" class="form-label h2">Max Price</label>
-  <input class="form-control" id="max-price" >
-  <input type="range" class="form-range" min="0" max="130" >
+  <input v-model.number="max" class="form-control" id="max-price" >
+  <input v-model="max" type="range" class="form-range" min="0" max="130" >
 
  <div class="form-check">
   <input v-model="displayLabels" class="form-check-input" type="checkbox" id="showLabels">
@@ -22,6 +22,8 @@
   </label>
 </div>
 
+  
+  
   <div v-for="item in products" :key="item.id" id="item-list" class="row align-items-center">
     <template v-if="item.price<=Number(max)">
       <div class="col-sm-4">
@@ -31,15 +33,14 @@
        <h3 class="text-primary">{{item.name }}</h3>
        <p class="mb-0">{{ item.description }}</p>
        <div class="h5 float-right">
-         <span class="badge bg-success" v-if="item.price>=90">premier</span>
-         <span class="badge bg-primary" v-else-if="item.price<90 && item.price>10">value</span>
-         <span class="badge bg-danger" v-else>sale</span>
+         <span class="badge bg-success" v-if="item.price>=90 && displayLabels">premier</span>
+         <span class="badge bg-primary" v-else-if="item.price<90 && item.price>10 && displayLabels">value</span>
+         <span class="badge bg-danger" v-else-if="item.price<=10 && displayLabels">sale</span>
          ${{item.price}}</div>
       </div>
     </template>
   </div>
 </section>
-
 <!-- App Template Code Here -->
 
 <!-- App Script Code Here -->
@@ -47,6 +48,7 @@
 const App = {
   data() {
     return {
+      displayLabels: true,
       max: 50,
       products : [
         {
