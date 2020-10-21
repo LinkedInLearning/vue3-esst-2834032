@@ -16,13 +16,13 @@
       <div class="mb-2">
         <span class="font-weight-bold bg-white">{{currency(cartTotal)}}</span>
         <button
-          :style="warningObject"
           @click="displayCart= !displayCart"
-          class="btn btn-success btn-sm ml-3"
+          class="btn btn-sm ml-3"
+          :class="cartBtn"
           id="cartDropdown"
           aria-haspopup="true"
           aria-expanded="false"
-        >
+        > 
         <i class="fas fa-shopping-cart mr-1"></i>
           {{cart.length}}
         </button>
@@ -54,7 +54,7 @@
      <h3 class="text-primary">{{item.name }}</h3>
      <p class="mb-0">{{ item.description }}</p>
      <div class="h5 float-right">
-       {{ currency(item.price) }}</div>
+       <span class="label"></span>{{ currency(item.price) }}</div>
     </div>
   </div>
 </section>
@@ -66,10 +66,6 @@
 const App = {
   data() {
     return {
-      warningObject: {
-        backgroundColor: 'auto',
-        border: 'transparent'
-      },
       borderStyle: {
         border: '3px solid darkgreen',
         borderRadius: '50%'   
@@ -89,6 +85,13 @@ const App = {
       });
   },
   computed: {
+    cartBtn() {
+      return {
+        'btn-secondary': this.cartTotal <=100,
+        'btn-success': this.cartTotal >100,
+        'btn-danger': this.cartTotal >200      
+      } 
+    },
     filteredProducts() {
       return this.products.filter( item => (item.price < this.max))
     },
@@ -99,7 +102,7 @@ const App = {
   methods: {
     addToCart(product) {
       this.cart.push(product);
-      if (this.cartTotal >=100) {this.warningObject.backgroundColor = 'red'}
+      if (this.cartTotal >=100) {this.salesBtn = 'btn-danger'}
     },
     currency(value) {
       return '$' + Number.parseFloat(value).toFixed(2);
