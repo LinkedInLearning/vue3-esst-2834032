@@ -16,6 +16,7 @@
       <div class="mb-2">
         <span class="font-weight-bold bg-white">{{currency(cartTotal)}}</span>
         <button
+          :style="warningObject"
           @click="displayCart= !displayCart"
           class="btn btn-success btn-sm ml-3"
           id="cartDropdown"
@@ -43,8 +44,8 @@
   <input v-model.number="max" type="range" class="form-range" min="0" max="130" >
   
   <div v-for="(item, index) in filteredProducts" :key="item.id" id="item-list" class="row align-items-center">
-    <div class="col-1 m-auto">
-      <button @click="addToCart(item)" class="btn btn-success">+</button>
+    <div class="col-2 m-auto">
+      <button :style="borderStyle" @click="addToCart(item)" class="btn btn-success">+</button>
     </div>
     <div class="col-sm-4">
       <img class="img-fluid d-block" :src="item.image" :alt="item.name">
@@ -65,6 +66,14 @@
 const App = {
   data() {
     return {
+      warningObject: {
+        backgroundColor: 'auto',
+        border: 'transparent'
+      },
+      borderStyle: {
+        border: '3px solid darkgreen',
+        borderRadius: '50%'   
+      },
       displayLabels: true,
       max: 50,
       cart: [],
@@ -89,7 +98,8 @@ const App = {
   },
   methods: {
     addToCart(product) {
-      this.cart.push(product)
+      this.cart.push(product);
+      if (this.cartTotal >=100) {this.warningObject.backgroundColor = 'red'}
     },
     currency(value) {
       return '$' + Number.parseFloat(value).toFixed(2);
