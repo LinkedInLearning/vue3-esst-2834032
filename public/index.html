@@ -5,16 +5,34 @@
   <title>Vue 3: Essential Training</title>
   <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css'>
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'> 
   <script src='https://unpkg.com/vue@next'></script>
 </head>
 <body class="container mt-5">
+<style>
+.dropdown-clip {
+  overflow: hidden;
+}
+
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition: all .5s ease-in-out;
+  transform: auto;
+}
+
+.dropdown-enter-from, 
+.dropdown-leave-to {
+  opacity: 0;
+  transform:translateY(-300px);
+}
+</style>
 <!-- App Template Code Here -->
 <div id="app">
   <nav class="navbar navbar-light sticky-top mr-3">
   <div v-if="cart.length" class=" w-100 navbar-text ml-auto d-flex justify-content-end position-relative">
     <div  class="mr-auto d-flex align-items-end flex-column bd-highlight mb-3 position-absolute" >
       <div class="mb-2">
-        <span class="font-weight-bold bg-white">{{currency(cartTotal)}}</span>
+        <span class="font-weight-bold bg-white" :class="totalColor">{{currency(cartTotal)}}</span>
         <button
           @click="displayCart= !displayCart"
           class="btn btn-sm ml-3"
@@ -27,11 +45,17 @@
           {{cart.length}}
         </button>
       </div>
-      <div v-if="displayCart" class="list-group" aria-labelledby="cartDropdown">
+      <div class="dropdown-clip">
+      <transition name="dropdown"
+            @enter="transitionColor"
+            @after-leave="resetColor">      
+        <div v-if="displayCart" class="list-group" aria-labelledby="cartDropdown">
         <div v-for="(item, index) in cart" :key="index" class="list-group-item d-flex justify-content-between">
             <div >{{item.name}}</div>
             <div class="ml-3 font-weight-bold">{{currency(item.price)}}</div>
         </div>
+      </div>
+      </transition>
       </div>
     </div>
   </div>
@@ -66,9 +90,12 @@
 const App = {
   data() {
     return {
+      show: true,
+      btnColor: 'btn-success',
+      totalColor: 'text-secondary',
       borderStyle: {
         border: '3px solid darkgreen',
-        borderRadius: '50%'   
+        borderRadius: '50%'
       },
       displayLabels: true,
       max: 50,
@@ -100,6 +127,13 @@ const App = {
     }
   },
   methods: {
+    transitionColor(el) {
+      this.totalColor='text-danger';
+    },
+    resetColor() {
+      this.totalColor='text-secondary';
+    },
+
     addToCart(product) {
       this.cart.push(product);
       if (this.cartTotal >=100) {this.salesBtn = 'btn-danger'}
@@ -111,6 +145,7 @@ const App = {
 }
 
 Vue.createApp(App).mount('#app')
+
 </script>
 <!-- App Script Code Here -->
 </body>
