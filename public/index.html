@@ -25,6 +25,21 @@
   opacity: 0;
   transform:translateY(-300px);
 }
+
+.products-enter-active,
+.products-leave-active {
+  transition: all .5s ease-in-out;
+}
+
+.products-enter-from {
+  opacity: 0;
+  transform:translateX(300px);
+}
+ 
+.products-leave-to {
+  opacity: 0;
+  transform:translateX(-300px);
+}
 </style>
 <!-- App Template Code Here -->
 <div id="app">
@@ -65,22 +80,23 @@
   <label for="max-price" class="form-label h2">Max Price (${{max}})</label>
   <div class="badge bg-success ml-3">results: {{filteredProducts.length}}</div>
 
-  <input v-model.number="max" type="range" class="form-range" min="0" max="130" >
-  
-  <div v-for="(item, index) in filteredProducts" :key="item.id" id="item-list" class="row align-items-center">
-    <div class="col-2 m-auto">
-      <button :style="borderStyle" @click="addToCart(item)" class="btn btn-success">+</button>
+  <input v-model.number="max" type="range" class="form-range" min="0" max="130" > 
+  <transition-group name="products" appear>
+    <div v-for="(item, index) in filteredProducts" :key="item.id" id="item-list" class="row align-items-center">
+      <div class="col-2 m-auto">
+        <button :style="borderStyle" @click="addToCart(item)" class="btn btn-success">+</button>
+      </div>
+      <div class="col-sm-4">
+        <img class="img-fluid d-block" :src="item.image" :alt="item.name">
+      </div>
+      <div class="col">
+       <h3 class="text-primary">{{item.name }}</h3>
+       <p class="mb-0">{{ item.description }}</p>
+       <div class="h5 float-right">
+         <span class="label"></span>{{ currency(item.price) }}</div>
+      </div>
     </div>
-    <div class="col-sm-4">
-      <img class="img-fluid d-block" :src="item.image" :alt="item.name">
-    </div>
-    <div class="col">
-     <h3 class="text-primary">{{item.name }}</h3>
-     <p class="mb-0">{{ item.description }}</p>
-     <div class="h5 float-right">
-       <span class="label"></span>{{ currency(item.price) }}</div>
-    </div>
-  </div>
+  </transition-group>  
 </section>
 </div>
 <!-- App Template Code Here -->
@@ -145,7 +161,6 @@ const App = {
 }
 
 Vue.createApp(App).mount('#app')
-
 </script>
 <!-- App Script Code Here -->
 </body>
