@@ -47,7 +47,7 @@
   <div v-if="cart.length" class=" w-100 navbar-text ml-auto d-flex justify-content-end position-relative">
     <div  class="mr-auto d-flex align-items-end flex-column bd-highlight mb-3 position-absolute" >
       <div class="mb-2">
-        <span class="font-weight-bold bg-white" :class="totalColor">{{currency(cartTotal)}}</span>
+        <span class="font-weight-bold bg-white" :class="totalColor"><curr :amt="cartTotal"></curr></span>
         <button
           @click="displayCart= !displayCart"
           class="btn btn-sm ml-3"
@@ -67,7 +67,7 @@
         <div v-if="displayCart" class="list-group" aria-labelledby="cartDropdown">
         <div v-for="(item, index) in cart" :key="index" class="list-group-item d-flex justify-content-between">
             <div >{{item.name}}</div>
-            <div class="ml-3 font-weight-bold">{{currency(item.price)}}</div>
+            <div class="ml-3 font-weight-bold"><curr :amt="item.price"></curr></div>
         </div>
       </div>
       </transition>
@@ -93,7 +93,7 @@
        <h3 class="text-primary">{{item.name }}</h3>
        <p class="mb-0">{{ item.description }}</p>
        <div class="h5 float-right">
-         <span class="label"></span>{{ currency(item.price) }}</div>
+         <span class="label"></span><curr :amt="item.price"></curr></div>
       </div>
     </div>
   </transition-group>  
@@ -103,7 +103,7 @@
 
 <!-- App Script Code Here -->
 <script>
-const App = {
+const App = Vue.createApp({
   data() {
     return {
       show: true,
@@ -153,14 +153,22 @@ const App = {
     addToCart(product) {
       this.cart.push(product);
       if (this.cartTotal >=100) {this.salesBtn = 'btn-danger'}
-    },
-    currency(value) {
+    }
+  }
+}) 
+
+App.component('curr', {
+  props: ['amt'],
+  template: `{{dollar(amt)}}`,
+  methods: {
+    dollar(value) {
       return '$' + Number.parseFloat(value).toFixed(2);
     }
   }
-}
+  
+})
 
-Vue.createApp(App).mount('#app')
+App.mount('#app')
 </script>
 <!-- App Script Code Here -->
 </body>
