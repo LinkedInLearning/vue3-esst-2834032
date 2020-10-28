@@ -44,46 +44,44 @@
 <!-- App Template Code Here -->
 <div id="app">
   <nav class="navbar navbar-light sticky-top mr-3">
-  <div v-if="cart.length" class=" w-100 navbar-text ml-auto d-flex justify-content-end position-relative">
-    <div  class="mr-auto d-flex align-items-end flex-column bd-highlight mb-3 position-absolute" >
-      <div class="mb-2">
-        <span class="font-weight-bold bg-white"><curr :amt="cartTotal"></curr></span>
-        <button
-          @click="displayCart= !displayCart"
-          class="btn btn-sm btn-success ml-3"
-          id="cartDropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        > 
-        <i class="fas fa-shopping-cart mr-1"></i>
-          {{cart.length}}
-        </button>
-      </div>
-      <div class="dropdown-clip">
-      <transition name="dropdown">
-        <div v-if="displayCart" class="list-group" aria-labelledby="cartDropdown">
-        <div v-for="(item, index) in cart" :key="index" class="list-group-item d-flex justify-content-between">
-            <div >{{item.name}}</div>
-            <div class="ml-3 font-weight-bold"><curr :amt="item.price"></curr></div>
+    <div v-if="cart.length" class=" w-100 navbar-text ml-auto d-flex justify-content-end position-relative">
+      <div  class="mr-auto d-flex align-items-end flex-column bd-highlight mb-3 position-absolute" >
+        <div class="mb-2">
+          <span class="font-weight-bold bg-white"><curr :amt="cartTotal"></curr></span>
+          <button
+            @click="displayCart= !displayCart"
+            class="btn btn-sm btn-success ml-3"
+            id="cartDropdown"
+            aria-haspopup="true"
+            aria-expanded="false"><i class="fas fa-shopping-cart mr-1"></i>
+            {{cart.length}}
+          </button>
+        </div>
+          <div class="dropdown-clip">
+            <transition name="dropdown">
+              <div v-if="displayCart" class="list-group" aria-labelledby="cartDropdown">
+                <div v-for="(item, index) in cart" :key="index" class="list-group-item d-flex justify-content-between">
+                    <div >{{item.name}}</div>
+                    <div class="ml-3 font-weight-bold"><curr :amt="item.price"></curr></div>
+                </div>
+              </div>
+            </transition>
+          </div>
         </div>
       </div>
-      </transition>
+    </nav>
+
+  <section class="container">  
+    <label for="max-price" class="form-label h2">Max Price (${{max}})</label>
+    <div class="badge bg-success ml-3">results: {{filteredProducts.length}}</div>
+
+    <input v-model.number="max" type="range" class="form-range" min="0" max="130" > 
+    <transition-group name="products" appear>
+      <div v-for="(item, index) in filteredProducts" :key="item.id" id="item-list" class="row align-items-center">
+      <product :item="item" @add-to-cart="addToCart"></product>
       </div>
-    </div>
-  </div>
-</nav>
-
-<section class="container">  
-  <label for="max-price" class="form-label h2">Max Price (${{max}})</label>
-  <div class="badge bg-success ml-3">results: {{filteredProducts.length}}</div>
-
-  <input v-model.number="max" type="range" class="form-range" min="0" max="130" > 
-  <transition-group name="products" appear>
-    <div v-for="(item, index) in filteredProducts" :key="item.id" id="item-list" class="row align-items-center">
-    <product :item="item" @add-to-cart="addToCart"></product>
-    </div>
-</transition-group>  
-</section>
+  </transition-group>  
+  </section>
 </div>
 <!-- App Template Code Here -->
 
@@ -151,7 +149,6 @@ App.component('curr', {
   
 })
 App.mount('#app')
-
 </script>
 <!-- App Script Code Here -->
 </body>
