@@ -1,46 +1,49 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/checkout">Checkout</router-link>
-  </div>
+  <navbar :cart="cart" />
   <div class="container">
-    <router-view />
+    <router-view :cart="cart" @addToCart="addToCart" />
   </div>
 </template>
+
+<script>
+import Navbar from '@/components/Navbar'
+export default {
+  data: function() {
+    return {
+      cart: [],
+      displayCart: false
+    }
+  },
+  components: {
+    Navbar
+  },
+  methods: {
+    addToCart(product) {
+      this.cart.push(product)
+      if (this.cartTotal >= 100) {
+        this.salesBtn = 'btn-danger'
+      }
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 $primary: #6f42c1;
 @import 'node_modules/bootstrap/scss/bootstrap';
 
-  .dropdown-clip {
-    overflow: hidden;
-  }
+.products-enter-active,
+.products-leave-active {
+  transition: all 0.5s ease-in-out;
+}
 
-  .dropdown-enter-active,
-  .dropdown-leave-active {
-    transition: all .5s ease-in-out;
-    transform: auto;
-  }
+.products-enter-from {
+  opacity: 0;
+  transform: translateX(300px);
+}
 
-  .dropdown-enter-from, 
-  .dropdown-leave-to {
-    opacity: 0;
-    transform:translateY(-300px);
-  }
-
-  .products-enter-active,
-  .products-leave-active {
-    transition: all .5s ease-in-out;
-  }
-
-  .products-enter-from {
-    opacity: 0;
-    transform:translateX(300px);
-  }
-  
-  .products-leave-to {
-    opacity: 0;
-    transform:translateX(-300px);
-  }
-
+.products-leave-to {
+  opacity: 0;
+  transform: translateX(-300px);
+}
 </style>
