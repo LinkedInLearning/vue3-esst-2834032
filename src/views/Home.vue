@@ -1,33 +1,13 @@
 <template>
   <section class="container">
-    <label for="max-price" class="form-label h2">Max Price (${{ max }})</label>
-    <div class="badge bg-success ml-3">
-      results: {{ filteredProducts.length }}
-    </div>
-
-    <input
-      v-model.number="max"
-      type="range"
-      class="form-range"
-      min="0"
-      max="130"
-    />
-
-    <transition-group name="products" appear>
-      <div
-        v-for="item in filteredProducts"
-        :key="item.id"
-        id="item-list"
-        class="row align-items-center"
-      >
-        <product :item="item"></product>
-      </div>
-    </transition-group>
+    <range-selector :products="filteredProducts" v-model="max" />
+    <product-list :products="filteredProducts" />
   </section>
 </template>
 
 <script>
-import Product from '@/components/Product'
+import ProductList from '@/components/ProductList'
+import RangeSelector from '@/components/RangeSelector'
 
 export default {
   name: 'Home',
@@ -35,12 +15,12 @@ export default {
     return {
       max: 50,
       cart: [],
-      displayCart: false,
       products: []
     }
   },
   components: {
-    Product
+    RangeSelector,
+    ProductList
   },
   created() {
     fetch('https://hplussport.com/api/products/order/price')
@@ -51,7 +31,7 @@ export default {
   },
   computed: {
     filteredProducts() {
-      return this.products.filter(item => item.price < this.max)
+      return this.products.filter(item => item.price < Number(this.max))
     }
   }
 }
