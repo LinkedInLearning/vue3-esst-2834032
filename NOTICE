@@ -5,7 +5,17 @@ Licensed under the LinkedIn Learning Exercise File License (the "License").
 See LICENSE in the project root for license information.
 
 ATTRIBUTIONS:
-[PLEASE PROVIDE ATTRIBUTIONS OR DELETE THIS AND THE ABOVE LINE “ATTRIBUTIONS”]
+
+Bootstrap
+https://getbootstrap.com
+Copyright (c) 2020
+License: MIT
+
+Vue.js
+https://vuejs.org/
+Copyright (c) 2020
+License: MIT
+
 
 Please note, this project may automatically load third party code from external 
 repositories (for example, NPM modules, Composer packages, or other dependencies). 
